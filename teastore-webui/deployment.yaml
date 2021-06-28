@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-webui
+  labels:
+    tags.datadoghq.com/env: "dev"
+    tags.datadoghq.com/service: "teastore-webui"
+    tags.datadoghq.com/version: "1.3.8"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-webui
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-webui
+    spec:
+      containers:
+      - name: teastore-webui
+        image: descartesresearch/teastore-webui
+        ports:
+        - containerPort: 8080
+      env:
+        config:
+          HOST_NAME: "teastore-webui"
+          REGISTRY_HOST: "teastore-registry" 
+        - configMapRef:
+            name: teastore-webui
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_ENV
+           valueFrom:
+            fieldRef:
+             fieldPath: metadata.labels['tags.datadoghq.com/env']
+        - name: DD_SERVICE
+         valueFrom:
+            fieldRef:
+             fieldPath: metadata.labels['tags.datadoghq.com/service']
+        - name: DD_VERSION
+         valueFrom:
+            fieldRef:
+             fieldPath: metadata.labels['tags.datadoghq.com/version']
+        - name: DD_PROFILING_ENABLED
+          value: "true"
+        - name: DD_LOGS_INJECTION
+          value: "true"
