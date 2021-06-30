@@ -1,11 +1,11 @@
-name: <+stage.variables.name>
+name: <+pipeline.stages.dev.name>
 replicas: 1
 
-image: <+artifact.image>
+image: <+pipeline.stages.dev.spec.serviceConfig.serviceDefinition.spec.artifacts.primary.spec.imagePath>
 # dockercfg: <+artifact.imagePullSecret>
 
 createNamespace: true
-namespace: <+infra.namespace>
+namespace: <+pipeline.stages.dev.spec.infrastructure.infrastructureDefinition.spec.namespace>
 
 # Service Type allow you to specify what kind of service you want.
 # Possible values for ServiceType are:
