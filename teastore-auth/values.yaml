@@ -1,4 +1,5 @@
-name: <+pipeline.stages.dev.name>
+#name: <+pipeline.stages.dev.name>
+name: teastore-auth
 replicas: 1
 
 image: <+artifact.image>
