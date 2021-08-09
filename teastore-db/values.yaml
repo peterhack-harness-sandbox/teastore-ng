@@ -1,5 +1,5 @@
 #name: <+pipeline.stages.dev.name>
-name: teastore-webui
+name: teastore-db
 replicas: 1
 
 image: <+artifact.image>
@@ -15,15 +15,10 @@ serviceType: NodePort
 
 # A Service can map an incoming port to any targetPort.
 # targetPort is where application is listening on inside the container.
-servicePort: 30080
-serviceTargetPort: 8080
+servicePort: 3306
+serviceTargetPort: 3306
 
 # Specify all environment variables to be added to the container.
 # The following two maps, config and secrets, are put into a ConfigMap
 # and a Secret, respectively.
 # Both are added to the container environment in podSpec as envFrom source. 
-# env:
-#   config:
-#    key1: value10
-#  secrets:
-#    key2: value2
